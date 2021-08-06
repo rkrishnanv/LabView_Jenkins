@@ -11,9 +11,9 @@ pipeline {
   post {
     always {
       junit '*.xml'
-	
-	if (currentBuild.currentResult == 'FAILURE')
-	{
+	  
+	  if (currentBuild.currentResult == 'FAILURE')
+		{
            step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: "rkrishnanv@laserdepth.com",sendToIndividuals: true])
         } 
     }
