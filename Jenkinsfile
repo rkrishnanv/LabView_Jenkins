@@ -8,14 +8,20 @@ pipeline {
     }
 
   }
+  
+  environment {
+        EMAIL_TO = 'rkrishnanv@laserdepth.com'
+    }
+  
+  
   post {
     always {
-      junit '*.xml'
-	  
-	  if (currentBuild.currentResult == 'FAILURE')
-		{
-           step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: "rkrishnanv@laserdepth.com",sendToIndividuals: true])
-        } 
+      junit '*.xml'   
+    }
+	failure{
+		emailext body: 'Check console output at $BUILD_URL to view the results. \n\n ${CHANGES} \n\n -------------------------------------------------- \n${BUILD_LOG, maxLines=100, escapeHtml=false}', 
+                    to: "${EMAIL_TO}", 
+                    subject: 'Build failed in Jenkins: $PROJECT_NAME - #$BUILD_NUMBER'
     }
   }
 }
