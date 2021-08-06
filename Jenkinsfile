@@ -7,12 +7,6 @@ pipeline {
       }
     }
 
-    stage('Results') {
-      steps {
-        junit '*.xml'
-      }
-    }
-
   }
   post {
     always {
