@@ -7,9 +7,15 @@ pipeline
     {
       steps
       {
-        bat '.\\\\Scripts\\\\UnitTest.bat'
-        junit '*.xml'
+        bat '.\\\\Scripts\\\\UnitTest.bat'       
       }
     }  
+  }
+  post 
+  {
+     always
+     {
+            junit 'build/reports/**/*.xml'
+     }
   }
 }
